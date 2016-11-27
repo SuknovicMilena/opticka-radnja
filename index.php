@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="site.css">
 </head>
 
-<body >
+<body>
 
     <select id="proizvod-tip">
         <option selected disabled>--Izaberi Tip--</option>
@@ -12,11 +12,8 @@
         <option value="NaocareZaVid">Naocare za vid</option>
         <option value="Proizvodjac">Proizvodjac</option>
     </select>
-
-    
     
 <h3> Proizvodi</h3>
-
 
 <div class="proizvodi-holder">
     <table id="proizvodi">
@@ -32,7 +29,6 @@
     </table>
 </div>
 
-
 <div id= "dugmici">
 <button id="dodaj-naocare">Dodaj nove naocare</button>
 <button id="otkazi-naocare">Otkazi</button>
@@ -45,9 +41,6 @@
     <select id="proizvodjac"></select>
     <button id="sacuvaj">Sacuvaj</button>
 </div>
-
-
-
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
 <script src="izaberiProizvod.js"></script>
