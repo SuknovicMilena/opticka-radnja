@@ -1,0 +1,24 @@
+body {
+	font-family: Verdana;
+	background-image:url(miu.jpg);
+	background-size:cover;
+}
+
+table {
+    border-collapse: collapse;
+	width: 50%;
+}
+
+table{
+    border: 1px solid black;
+}
+
+div.forma-holder,{
+	display: none;
+}
+
+
+.save-edit,
+.cancel-edit{
+	display: none;
+}
