@@ -16,7 +16,7 @@
             break;
         case 'DELETE':
             parse_str($_SERVER['QUERY_STRING'], $params);
-            obrisiProizvodjaca(intval($params['naocareId']));
+            obrisiProizvodjaca(intval($params['proizvodjacID']));
             break;
         default:
             throw new Exception('Error Processing Request', 1);
@@ -57,9 +57,10 @@
         
         $sql = "UPDATE proizvodjac 
                 SET 
-                    ime='$proizvodjacZaIzmenu->ime',
-                    proizvodjac_id=$proizvodjacZaIzmenu->proizvodjac_id
-                WHERE id= $proizvodjacZaIzmenu->id";
+                      ime='$proizvodjacZaIzmenu->ime',
+                    
+                WHERE proizvodjac_id=$proizvodjacZaIzmenu->proizvodjac_id";
+
 
         if ($q = $mysqli->query($sql)) {
             header('Content-Type: application/json');
@@ -73,7 +74,7 @@
     function obrisiProizvodjaca($proizvodjacID) {
         global $mysqli;
 
-        $sql = "DELETE FROM proizvodjac WHERE id=$proizvodjacID";
+        $sql = "DELETE FROM proizvodjac WHERE proizvodjac_id=$proizvodjacID";
 
         if ($q = $mysqli->query($sql)) {
             echo true; 

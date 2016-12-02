@@ -26,7 +26,7 @@
         global $mysqli;
         $sql = 'SELECT n.id, n.ime as ime, p.ime as proizvodjac
                 FROM naocare_za_vid n 
-                JOIN proizvodjac p ON (n.id = p.proizvodjac_id)';
+                JOIN proizvodjac p ON (p.proizvodjac_id = n.proizvodjac_id)';
         $rezultat = $mysqli->query($sql);
         
         $data = array();
@@ -41,9 +41,8 @@
 
     function dodajNaocare($naocareZaCuvanje) {
         global $mysqli;
-        $sql = 'INSERT INTO naocare_za_vid (ime, proizvodjac_id) 
-        VALUES ("'. $naocareZaCuvanje->ime . '","' . $naocareZaCuvanje->proizvodjac_id . '")';
-
+        $sql = 'INSERT INTO naocare_za_vid (ime, proizvodjac_id)  VALUES ("'. $naocareZaCuvanje->ime . '","' . $naocareZaCuvanje->proizvodjac_id . '")';
+     
         if ($q = $mysqli->query($sql)) {
             $naocareZaCuvanje->id = $mysqli->insert_id; //sam nam insertuje id * AI kako smo i postavili kad smo pravili bazu
             header('Content-Type: application/json');

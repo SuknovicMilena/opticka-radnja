@@ -1,6 +1,6 @@
 body {
 	font-family: Verdana;
-	background-image:url(miu.jpg);
+	background-image:url(pozadina.jpg);
 	background-size:cover;
 }
 
@@ -13,7 +13,7 @@ table{
     border: 1px solid black;
 }
 
-div.forma-holder,{
+div.forma-holder,div.proizvodi-holder,div.proizvodjaci-holder,div.dugmici{
 	display: none;
 }
 
@@ -21,4 +21,10 @@ div.forma-holder,{
 .save-edit,
 .cancel-edit{
 	display: none;
+}
+div.slajder{
+
+	width: 1000px;
+	height: 454px;
+
 }
