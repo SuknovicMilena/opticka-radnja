@@ -54,7 +54,7 @@
 
 <div class="forma-holder">
     <label>Ime:</label>
-    <input type="text" name="ime" id="ime">
+    <input type="text" name="ime" id="ime" />
     <label>Proizvodjac:</label>
     <select id="proizvodjac"></select>
     <button id="sacuvaj">Sacuvaj</button>
@@ -65,31 +65,8 @@
 
 <h2 class="w3-center">Slideshow</h2>
 
-<div class="slajder" >
-  <img class="mySlides" src="miu.jpg">
-   <img class="mySlides" src="fendi.jpg" >
-    <img class="mySlides" src="naocaree.jpg">
-     <img class="mySlides" src="slike.jpg">
+<div class="slajder">
 </div>
-
-<script>
-var myIndex = 0;
-carousel();
-
-function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}    
-    x[myIndex-1].style.display = "block";  
-    setTimeout(carousel, 2000); // Change image every 2 seconds
-}
-</script>
-
-
 
 </body>
 

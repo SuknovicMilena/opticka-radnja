@@ -4,9 +4,12 @@ var proizvodjaciUrl = 'proizvodjaciOperacije.php';
 var sveNaocareZaSunce = [];
 var sveNaocareZaVid = [];
 var sviProizvodjaci = [];
+var slikeUrl = ['slike.jpg', 'naocaree.jpg', 'fendi.jpg'];
 
 $(window).load(function () {
 
+    carousel();
+    setInterval(carousel, 2000);
     //registruje event handler koji se okida kada promenis vrednost selecta
     // $('#proizvod-tip').change(function() {
     $(document).on('change', "#proizvod-tip", function () {
@@ -438,4 +441,13 @@ function hideEditButtonsProizvodjac(imeId) {
     $('.cancel-editProizvodjac[proizvodjac-id="' + imeId + '"]').hide();
     $('.izmeniProizvodjac[proizvodjac-id="' + imeId + '"]').show();
     $('.obrisiProizvodjac[proizvodjac-id="' + imeId + '"]').show();
+}
+
+var currentIndex = 0;
+function carousel() {
+    var carouselHolder = $(".slajder")[0];
+    var imageToUse = slikeUrl[currentIndex];
+    carouselHolder.style.backgroundImage = 'url(' + imageToUse + ')';
+    if (currentIndex < slikeUrl.length - 1) currentIndex++;
+    else currentIndex = 0;
 }
