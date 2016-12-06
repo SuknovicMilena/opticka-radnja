@@ -13,11 +13,14 @@ table {
 	border: 1px solid black;
 }
 
-div.forma-holder, div.proizvodi-holder, div.proizvodjaci-holder, div.dugmici {
+div.forma-holder, div.proizvodi-holder, div.proizvodjaci-holder {
 	display: none;
 }
 
-.save-edit, .cancel-edit {
+.save-edit, .cancel-edit, 
+.save-edit-sunce, .cancel-edit-sunce,
+.save-edit-proizvodjac, .cancel-edit-proizvodjac,
+#dodaj-naocare, #otkazi-naocare {
 	display: none;
 }
 

@@ -16,7 +16,7 @@ $(window).load(function () {
 
         //daje selected value inputa
         var selectedValue = $(this).val();
-        $("div.dugmici").show();
+        $("#dodaj-naocare").show();
 
         //Prikazi donji deo stranice
 
@@ -27,7 +27,6 @@ $(window).load(function () {
                 $("div.proizvodjaci-holder").hide();
                 $("div.proizvodi-holder").show();
                 prikaziSveNaocareZaVid();
-                $("#otkazi-naocare").show();
                 break;
 
             // NAOCARE ZA SUNCE/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +53,8 @@ $(window).load(function () {
     //naredba insert //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $(document).on('click', "#dodaj-naocare", function () {
         $("div.forma-holder").show();
+        $("#otkazi-naocare").show();
+        getProizvodjaci($('#proizvodjac'));
         $(this).hide();
     });
 
@@ -108,19 +109,19 @@ $(window).load(function () {
 
 
         // get the contents of the attribute 
-        var naocareId = $(this).attr('sunce-id');
+        var naocareId = $(this).attr('data-id');
 
         var naocareZaUpdate = sveNaocareZaSunce.filter(function (n) {
             return n.id == naocareId;
         })[0];
 
-        var tdIme = $('#proizvodi td.imeSunce[sunce-id="' + naocareId + '"]');
-        var input = $('<input type="text" class="ime-editSunce" sunce-id="' + naocareId + '" />');
+        var tdIme = $('#proizvodi td.imeSunce[data-id="' + naocareId + '"]');
+        var input = $('<input type="text" class="ime-edit-sunce" data-id="' + naocareId + '" />');
         input.val(tdIme.html());
         tdIme.html(input);
 
-        var tdProizvodjac = $('#proizvodi td.proizvodjacSunce[sunce-id="' + naocareId + '"]');
-        var select = $('<select class="proizvodjac-editSunce" sunce-id="' + naocareId + '"/>');
+        var tdProizvodjac = $('#proizvodi td.proizvodjacSunce[data-id="' + naocareId + '"]');
+        var select = $('<select class="proizvodjac-edit-sunce" data-id="' + naocareId + '"/>');
         getProizvodjaci(select, function (finalSelectObject) {
             tdProizvodjac.html(finalSelectObject);
         });
@@ -130,21 +131,19 @@ $(window).load(function () {
     $(document).on('click', ".izmeniProizvodjac", function () {
 
         // get the contents of the attribute 
-        var proizvodjacID = $(this).attr('proizvodjac-id');
+        var proizvodjacID = $(this).attr('data-id');
 
         var proizvodjacZaUpdate = sviProizvodjaci.filter(function (p) {
             return p.proizvodjac_id == proizvodjacID;
         })[0];
 
-        var tdIme = $('#proizvodjaci td.imeProizvodjac[proizvodjac-id="' + proizvodjacID + '"]');
-        var input = $('<input type="text" class="ime-editProizvodjac" proizvodjac-id="' + proizvodjacID + '" />');
+        var tdIme = $('#proizvodjaci td.imeProizvodjac[data-id="' + proizvodjacID + '"]');
+        var input = $('<input type="text" class="ime-edit-proizvodjac" data-id="' + proizvodjacID + '" />');
         input.val(tdIme.html());
         tdIme.html(input);
 
         showEditButtonsProizvodjac(proizvodjacID);
     });
-
-
 
     $(document).on('click', ".save-edit", function () {
         var naocareId = $(this).attr('data-id');
@@ -156,22 +155,21 @@ $(window).load(function () {
         updateNaocare(naocare);
     });
 
-
-    $(document).on('click', ".save-editSunce", function () {
-        var naocareId = $(this).attr('sunce-id');
+    $(document).on('click', ".save-edit-sunce", function () {
+        var naocareId = $(this).attr('data-id');
         var naocare = {
             id: naocareId,
-            ime: $('.ime-editSunce[sunce-id="' + naocareId + '"]').val(),
-            proizvodjac_id: $('.proizvodjac-editSunce[sunce-id="' + naocareId + '"]').val()
+            ime: $('.ime-edit-sunce[data-id="' + naocareId + '"]').val(),
+            proizvodjac_id: $('.proizvodjac-edit-sunce[data-id="' + naocareId + '"]').val()
         };
         updateNaocareSunce(naocare);
     });
 
-    $(document).on('click', ".save-editProizvodjac", function () {
-        var proizvodjacId = $(this).attr('proizvodjac-id');
+    $(document).on('click', ".save-edit-proizvodjac", function () {
+        var proizvodjacId = $(this).attr('data-id');
         var proizvodjac = {
             id: proizvodjacId,
-            ime: $('.ime-editProizvodjac[proizvodjac-id="' + proizvodjacId + '"]').val(),
+            ime: $('.ime-edit-proizvodjac[data-id="' + proizvodjacId + '"]').val(),
         };
         updateProizvodjace(proizvodjac);
     });
@@ -195,24 +193,23 @@ $(window).load(function () {
         hideEditButtons(naocareId);
     });
 
-    $(document).on('click', ".cancel-editSunce", function () {
-        var naocareId = $(this).attr('sunce-id');
+    $(document).on('click', ".cancel-edit-sunce", function () {
+        var naocareId = $(this).attr('data-id');
         var naocareZaUpdate = sveNaocareZaSunce.filter(function (n) {
             return n.id == naocareId;
         })[0];
 
-        $('#proizvodi td[sunce-id="' + naocareId + '"]').each(function () {
+        $('#proizvodi td[data-id="' + naocareId + '"]').each(function () {
             if ($(this).hasClass('imeSunce')) {
-                $(this).html(naocareZaUpdate.imeSunce);
+                $(this).html(naocareZaUpdate.ime);
             }
             else if ($(this).hasClass('proizvodjacSunce')) {
-                $(this).html(naocareZaUpdate.proizvodjacSunce);
+                $(this).html(naocareZaUpdate.proizvodjac);
             }
         });
 
         hideEditButtonsSunce(naocareId);
     });
-
 
     $(document).on('click', ".obrisi", function () {
         if (confirm("Da li ste sigurni da zelite da obrisete ove naocare?")) {
@@ -229,7 +226,7 @@ $(window).load(function () {
 
     $(document).on('click', ".obrisiSunce", function () {
         if (confirm("Da li ste sigurni da zelite da obrisete ove naocare?")) {
-            var naocareId = $(this).attr('sunce-id');
+            var naocareId = $(this).attr('data-id');
             $.ajax({
                 url: naocareZaSunceUrl + '?naocareId=' + naocareId,
                 type: 'DELETE',
@@ -239,9 +236,10 @@ $(window).load(function () {
             });
         }
     });
+
     $(document).on('click', ".obrisiProizvodjac", function () {
         if (confirm("Da li ste sigurni da zelite da obrisete ove naocare?")) {
-            var proizvodjacId = $(this).attr('proizvodjac-id');
+            var proizvodjacId = $(this).attr('data-id');
             $.ajax({
                 url: proizvodjaciUrl + '?proizvodjacId=' + proizvodjacId,
                 type: 'DELETE',
@@ -274,12 +272,12 @@ function prikaziProizvodjace() {
 
                 '<td>' + proizvodjac.proizvodjac_id + '</td>' +
 
-                '<td class="imeProizvodjac" proizvodjac-id=' + proizvodjac.id + '>' + proizvodjac.ime + '</td>' +
+                '<td class="imeProizvodjac" data-id=' + proizvodjac.proizvodjac_id + '>' + proizvodjac.ime + '</td>' +
                 '<td>' +
-                '<button class="izmeniProizvodjac" proizvodjac-id="' + proizvodjac.id + '">Izmeni</button>' +
-                '<button class="obrisiProizvodjac" proizvodjac-id="' + proizvodjac.id + '">Obrisi</button>' +
-                '<button class="save-editProizvodjac" proizvodjac-id="' + proizvodjac.id + '">Sacuvaj</button>' +
-                '<button class="cancel-editProizvodjac" proizvodjac-id="' + proizvodjac.id + '">Otkazi</button>' +
+                '<button class="izmeniProizvodjac" data-id="' + proizvodjac.proizvodjac_id + '">Izmeni</button>' +
+                '<button class="obrisiProizvodjac" data-id="' + proizvodjac.proizvodjac_id + '">Obrisi</button>' +
+                '<button class="save-edit-proizvodjac" data-id="' + proizvodjac.proizvodjac_id + '">Sacuvaj</button>' +
+                '<button class="cancel-edit-proizvodjac" data-id="' + proizvodjac.proizvodjac_id + '">Otkazi</button>' +
                 '</td>' +
                 '</tr>';
             sviProizvodjaciHtml += proizvodjacHtml;
@@ -302,13 +300,13 @@ function prikaziSveNaocareZaSunce() {
 
             var naocareHtml = '<tr>' +
                 '<td>' + naocareSunce.id + '</td>' +                     //td je jedna celija!!!!!
-                '<td class="imeSunce" sunce-id=' + naocareSunce.id + '>' + naocareSunce.ime + '</td>' +
-                '<td class="proizvodjacSunce" sunce-id=' + naocareSunce.id + '>' + naocareSunce.proizvodjac + '</td>' +
+                '<td class="imeSunce" data-id=' + naocareSunce.id + '>' + naocareSunce.ime + '</td>' +
+                '<td class="proizvodjacSunce" data-id=' + naocareSunce.id + '>' + naocareSunce.proizvodjac + '</td>' +
                 '<td>' +
-                '<button class="izmeniSunce" sunce-id="' + naocareSunce.id + '">Izmeni</button>' +
-                '<button class="obrisiSunce" sunce-id="' + naocareSunce.id + '">Obrisi</button>' +
-                '<button class="save-editSunce" sunce-id="' + naocareSunce.id + '">Sacuvaj</button>' +
-                '<button class="cancel-editSunce" sunce-id="' + naocareSunce.id + '">Otkazi</button>' +
+                '<button class="izmeniSunce" data-id="' + naocareSunce.id + '">Izmeni</button>' +
+                '<button class="obrisiSunce" data-id="' + naocareSunce.id + '">Obrisi</button>' +
+                '<button class="save-edit-sunce" data-id="' + naocareSunce.id + '">Sacuvaj</button>' +
+                '<button class="cancel-edit-sunce" data-id="' + naocareSunce.id + '">Otkazi</button>' +
                 '</td>' +
                 '</tr>';
             sveNaocareSunceHtml += naocareHtml;
@@ -409,16 +407,16 @@ function showEditButtons(naocareId) {
 
 
 function showEditButtonsSunce(naocareId) {
-    $('.save-editSunce[sunce-id="' + naocareId + '"]').show();
-    $('.cancel-editSunce[sunce-id="' + naocareId + '"]').show();
-    $('.izmeniSunce[sunce-id="' + naocareId + '"]').hide();
-    $('.obrisiSunce[sunce-id="' + naocareId + '"]').hide();
+    $('.save-edit-sunce[data-id="' + naocareId + '"]').show();
+    $('.cancel-edit-sunce[data-id="' + naocareId + '"]').show();
+    $('.izmeniSunce[data-id="' + naocareId + '"]').hide();
+    $('.obrisiSunce[data-id="' + naocareId + '"]').hide();
 }
 function showEditButtonsProizvodjac(imeId) {
-    $('.save-editProizvodjac[proizvodjac-id="' + imeId + '"]').show();
-    $('.cancel-editProizvodjac[proizvodjac-id="' + imeId + '"]').show();
-    $('.izmeniProizvodjac[proizvodjac-id="' + imeId + '"]').hide();
-    $('.obrisiProizvodjac[proizvodjac-id="' + imeId + '"]').hide();
+    $('.save-edit-proizvodjac[data-id="' + imeId + '"]').show();
+    $('.cancel-edit-proizvodjac[data-id="' + imeId + '"]').show();
+    $('.izmeniProizvodjac[data-id="' + imeId + '"]').hide();
+    $('.obrisiProizvodjac[data-id="' + imeId + '"]').hide();
 }
 
 function hideEditButtons(naocareId) {
@@ -428,19 +426,18 @@ function hideEditButtons(naocareId) {
     $('.obrisi[data-id="' + naocareId + '"]').show();
 }
 
-
 function hideEditButtonsSunce(naocareId) {
-    $('.save-editSunce[sunce-id="' + naocareId + '"]').hide();
-    $('.cancel-editSunce[sunce-id="' + naocareId + '"]').hide();
-    $('.izmeniSunce[sunce-id="' + naocareId + '"]').show();
-    $('.obrisiSunce[sunce-id="' + naocareId + '"]').show();
+    $('.save-edit-sunce[data-id="' + naocareId + '"]').hide();
+    $('.cancel-edit-sunce[data-id="' + naocareId + '"]').hide();
+    $('.izmeniSunce[data-id="' + naocareId + '"]').show();
+    $('.obrisiSunce[data-id="' + naocareId + '"]').show();
 }
 
 function hideEditButtonsProizvodjac(imeId) {
-    $('.save-editProizvodjac[proizvodjac-id="' + imeId + '"]').hide();
-    $('.cancel-editProizvodjac[proizvodjac-id="' + imeId + '"]').hide();
-    $('.izmeniProizvodjac[proizvodjac-id="' + imeId + '"]').show();
-    $('.obrisiProizvodjac[proizvodjac-id="' + imeId + '"]').show();
+    $('.save-edit-proizvodjac[data-id="' + imeId + '"]').hide();
+    $('.cancel-edit-proizvodjac[data-id="' + imeId + '"]').hide();
+    $('.izmeniProizvodjac[data-id="' + imeId + '"]').show();
+    $('.obrisiProizvodjac[data-id="' + imeId + '"]').show();
 }
 
 var currentIndex = 0;

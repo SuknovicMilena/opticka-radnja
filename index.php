@@ -47,9 +47,9 @@
     </table>
 </div>
 
-<div class= "dugmici">
-<button id="dodaj-naocare">Dodaj nove naocare</button>
-<button id="otkazi-naocare">Otkazi</button>
+<div>
+    <button id="dodaj-naocare">Dodaj nove naocare</button>
+    <button id="otkazi-naocare">Otkazi</button>
 </div>
 
 <div class="forma-holder">
