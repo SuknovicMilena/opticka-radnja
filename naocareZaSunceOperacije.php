@@ -42,6 +42,7 @@
     function dodajNaocare($naocareZaCuvanje) {
         global $mysqli;
         $sql = 'INSERT INTO naocare_za_sunce (ime, proizvodjac_id)  VALUES ("'. $naocareZaCuvanje->ime . '","' . $naocareZaCuvanje->proizvodjac_id . '")';
+
      
         if ($q = $mysqli->query($sql)) {
             $naocareZaCuvanje->id = $mysqli->insert_id; //sam nam insertuje id * AI kako smo i postavili kad smo pravili bazu

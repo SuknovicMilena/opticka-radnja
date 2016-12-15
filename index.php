@@ -1,73 +1,54 @@
+<?php
+   include("konekcija.php");
+   session_start();
+   
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+      
+        $ime=$_POST['username'];
+        $lozinka=$_POST['password'];
+        
+        $sql="SELECT * FROM korisnici WHERE ime='$ime' AND lozinka='$lozinka' ";
+        $rezultat = $mysqli->query($sql);
+        if ($rezultat->num_rows==1){
+            $_SESSION['login_user']=$korisnickoime;
+            header("location: proizvodi.php");
+    } else {
+            $poruka1 = "Korisnicko ime ili lozinka su pogresni!";
+            echo "<script type='text/javascript'>alert('$poruka1');</script>";
+        }
+        $mysqli->close();
+ }
+   
+?>
+
 <html>
-
-<head>
-<link rel="stylesheet" href="site.css">
-</head>
-
-<body>
- 
-    <a href = "/">Pocetna strana</a>
-    
-    <select id="proizvod-tip">
-        <option selected disabled>--Izaberi Tip--</option>
-        <option value="NaocareZaSunce">Naocare za sunce</option>
-        <option value="NaocareZaVid">Naocare za vid</option>
-        <option value="Proizvodjac">Proizvodjac</option>
-    </select>
-    
-<h2> Dobrodosli na stranicu proizvoda </h2>
-
-
-<h3> Proizvodi</h3>
-
-<div class="proizvodi-holder">
-    <table id="proizvodi">
-        <thead>
-            <th>Id</th>
-            <th>Ime</th>
-            <th>Proizvodjac</th>
-            <th>Akcije</th>
-        </thead>
-        <tbody>
+      <head>
+      <link rel="stylesheet" href="loginIndex.css">
+  <title>Uloguj se</title>
+      
+  </head>
+   
+   <body>
+      <div id="login" align="center">
+         
+         <div style = "width:500px; border: solid 1px #FF0000; " align = "center">
+         <div style = "background-color:#f442ce; color:#FFFFFF; padding:3px;">
             
-        </tbody>
-    </table>
-</div>
+            <b>Uloguj se</b>
+				
+            <div style = "margin:30px">
+               
+               <form action = "" method = "post">
+                  <label>Korisničko ime:</label><input type = "text" name = "username" class = "box"/><br /><br />
+                  <label>Lozinka:</label><input type = "password" name = "password" class = "box" /><br/><br />
+                  <input type = "submit" value = " Potvrdi " /><br />
+               </form>
+                </div>
+				
+         </div>
+			
+      </div>
 
-<div class="proizvodjaci-holder">
-    <table id="proizvodjaci">
-        <thead>
-            <th>Id</th>
-            <th>Ime</th>
-            <th>Akcije</th>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
-</div>
-
-<div>
-    <button id="dodaj-naocare">Dodaj nove naocare</button>
-    <button id="otkazi-naocare">Otkazi</button>
-</div>
-
-<div class="forma-holder">
-    <label>Ime:</label>
-    <input type="text" name="ime" id="ime" />
-    <label>Proizvodjac:</label>
-    <select id="proizvodjac"></select>
-    <button id="sacuvaj">Sacuvaj</button>
-</div>
-
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
-<script src="izaberiProizvod.js"></script>
-
-<h2 class="w3-center">Slideshow</h2>
-
-<div class="slajder">
-</div>
-
-</body>
-
+   </body>
 </html>

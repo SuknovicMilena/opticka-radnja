@@ -10,51 +10,80 @@ $(window).load(function () {
 
     carousel();
     setInterval(carousel, 2000);
-    //registruje event handler koji se okida kada promenis vrednost selecta
-    // $('#proizvod-tip').change(function() {
+
+
+
     $(document).on('change', "#proizvod-tip", function () {
 
-        //daje selected value inputa
         var selectedValue = $(this).val();
-        $("#dodaj-naocare").show();
-
-        //Prikazi donji deo stranice
-
         switch (selectedValue) {
 
             // NAOCARE ZA VID/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             case 'NaocareZaVid':
                 $("div.proizvodjaci-holder").hide();
+                $("div.proizvodi-holderSunce").hide();
+                $("#dodaj-naocareSunce").hide();
+                $("div.proizvodi-holderSunce").hide();
                 $("div.proizvodi-holder").show();
+                $("#dodaj-naocare").show();
+                $("#otkazi-naocareSunce").hide();
+                $("#dodaj-proizvodjaca").hide();
+
                 prikaziSveNaocareZaVid();
                 break;
 
             // NAOCARE ZA SUNCE/////////////////////////////////////////////////////////////////////////////////////////////////////////////
             case 'NaocareZaSunce':
+                $("#dodaj-naocare").hide();
                 $("div.proizvodjaci-holder").hide();
-                $("div.proizvodi-holder").show();
+                $("div.proizvodi-holder").hide();
+                $("#dodaj-naocareSunce").show();
+                $("div.proizvodi-holderSunce").show();
+                $("#dodaj-proizvodjaca").hide();
+                $("#otkazi-naocare").hide();
+                $("#otkazi-proizvodjace").hide();
                 prikaziSveNaocareZaSunce();
-                $("#otkazi-naocare").show();
                 break;
 
             //proizvodjaci///////////////////////////////////////////////////////////////////////////////////////////////////////////////
             case 'Proizvodjac':
+                $("#dodaj-naocare").hide();
+                $("#dodaj-naocareSunce").hide();
+                $("div.proizvodi-holderSunce").hide();
                 $("div.proizvodi-holder").hide();
                 $("div.proizvodjaci-holder").show();
                 prikaziProizvodjace();
-                $("#otkazi-naocare").show();
+                $("#otkazi-naocare").hide();
+                $("#otkazi-naocareSunce").hide();
+                $("#dodaj-proizvodjaca").show();
+
                 break;
-
             default:
-
                 break;
         }
     });
     //naredba insert //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).on('click', "#dodaj-naocareSunce", function () {
+
+        $("div.forma-holderSunce").show();
+        $("#otkazi-naocareSunce").show();
+        getProizvodjaci($('#proizvodjacSunce'));
+        $(this).hide();
+    });
+
     $(document).on('click', "#dodaj-naocare", function () {
+
         $("div.forma-holder").show();
         $("#otkazi-naocare").show();
         getProizvodjaci($('#proizvodjac'));
+        $(this).hide();
+    });
+
+
+    $(document).on('click', "#dodaj-proizvodjaca", function () {
+
+        $("div.forma-holder-proizvodjaci").show();
+        $("#otkazi-proizvodjaca").show();
         $(this).hide();
     });
 
@@ -64,13 +93,31 @@ $(window).load(function () {
         $("#dodaj-naocare").show();
     });
 
+    $(document).on('click', "#otkazi-naocareSunce", function () {
+        $("div.forma-holderSunce").hide();
+        $(this).hide();
+        $("#dodaj-naocareSunce").show();
+    });
+    $(document).on('click', "#otkazi-proizvodjaca", function () {
+        $("div.forma-holder-proizvodjaci").hide();
+        $(this).hide();
+        $("#dodaj-proizvodjaca").show();
+    });
+
     $(document).on('click', "#sacuvaj", function () {
 
-        var naocare = {
-            ime: $("#ime").val(),
-            proizvodjac_id: $("#proizvodjac").val()
-        };
-        $.post(naocareZaVidUrl, JSON.stringify(naocare), function (sacuvaneNaocare) {
+        var naocare;
+        naocare = {
+                    ime: $("#ime").val(),
+                    proizvodjac_id: $("#proizvodjac").val()
+                };
+
+
+if (naocare.ime.length<3 || naocare.ime.length>8) {
+    alert("Niste dobro uneli, unesite ponovo! ");
+}
+else{
+       $.post(naocareZaVidUrl, JSON.stringify(naocare), function (sacuvaneNaocare) {
 
             console.log(sacuvaneNaocare);
             $("div.forma-holder").hide();
@@ -78,9 +125,38 @@ $(window).load(function () {
             $("#dodaj-naocare").show();
             prikaziSveNaocareZaVid();
         });
+}
+ 
+
     });
 
+    $(document).on('click', "#sacuvajSunce", function () {
 
+        var naocare = {
+            ime: $("#imeSunce").val(),
+            proizvodjac_id: $("#proizvodjacSunce").val()
+        };
+        $.post(naocareZaSunceUrl, JSON.stringify(naocare), function (sacuvaneNaocareSunce) {
+
+            console.log(sacuvaneNaocareSunce);
+            $("div.forma-holderSunce").hide();
+            $(this).hide();
+            $("#dodaj-naocareSunce").show();
+            prikaziSveNaocareZaSunce();
+        });
+    });
+    $(document).on('click', "#sacuvajProizvodjaca", function () {
+
+        var proizvodjac = { ime: $("#imeProizvodjac").val() };
+        $.post(proizvodjaciUrl, JSON.stringify(proizvodjac), function (sacuvaniProizvodjaci) {
+
+            console.log(sacuvaniProizvodjaci);
+            $("div.forma-holder-proizvodjaci").hide();
+            $(this).hide();
+            $("#dodaj-proizvodjaca").show();
+            prikaziProizvodjace();
+        });
+    });
     // naredbe koje su u celijama//////////////////////////////////////////////////////////////////////////////////////////
 
     $(document).on('click', ".izmeni", function () {
@@ -115,12 +191,12 @@ $(window).load(function () {
             return n.id == naocareId;
         })[0];
 
-        var tdIme = $('#proizvodi td.imeSunce[data-id="' + naocareId + '"]');
+        var tdIme = $('#proizvodiSunce td.imeSunce[data-id="' + naocareId + '"]');
         var input = $('<input type="text" class="ime-edit-sunce" data-id="' + naocareId + '" />');
         input.val(tdIme.html());
         tdIme.html(input);
 
-        var tdProizvodjac = $('#proizvodi td.proizvodjacSunce[data-id="' + naocareId + '"]');
+        var tdProizvodjac = $('#proizvodiSunce td.proizvodjacSunce[data-id="' + naocareId + '"]');
         var select = $('<select class="proizvodjac-edit-sunce" data-id="' + naocareId + '"/>');
         getProizvodjaci(select, function (finalSelectObject) {
             tdProizvodjac.html(finalSelectObject);
@@ -168,8 +244,8 @@ $(window).load(function () {
     $(document).on('click', ".save-edit-proizvodjac", function () {
         var proizvodjacId = $(this).attr('data-id');
         var proizvodjac = {
-            id: proizvodjacId,
-            ime: $('.ime-edit-proizvodjac[data-id="' + proizvodjacId + '"]').val(),
+            proizvodjac_id: proizvodjacId,
+            ime: $('.ime-edit-proizvodjac[data-id="' + proizvodjacId + '"]').val()
         };
         updateProizvodjace(proizvodjac);
     });
@@ -211,6 +287,21 @@ $(window).load(function () {
         hideEditButtonsSunce(naocareId);
     });
 
+    $(document).on('click', ".cancel-edit-proizvodjac", function () {
+        var imeId = $(this).attr('data-id');
+        var proizvodjacZaUpdate = sviProizvodjaci.filter(function (p) {
+            return p.proizvodjac_id == imeId;
+        })[0];
+
+        $('#proizvodjaci td[data-id="' + imeId + '"]').each(function () {
+            if ($(this).hasClass('imeProizvodjac')) {
+                $(this).html(proizvodjacZaUpdate.ime);
+            }
+        });
+
+        hideEditButtonsProizvodjac(imeId);
+    });
+
     $(document).on('click', ".obrisi", function () {
         if (confirm("Da li ste sigurni da zelite da obrisete ove naocare?")) {
             var naocareId = $(this).attr('data-id');
@@ -239,9 +330,9 @@ $(window).load(function () {
 
     $(document).on('click', ".obrisiProizvodjac", function () {
         if (confirm("Da li ste sigurni da zelite da obrisete ove naocare?")) {
-            var proizvodjacId = $(this).attr('data-id');
+            var proizvodjacID = $(this).attr('data-id');
             $.ajax({
-                url: proizvodjaciUrl + '?proizvodjacId=' + proizvodjacId,
+                url: proizvodjaciUrl + '?proizvodjacID=' + proizvodjacID,
                 type: 'DELETE',
                 success: function (result) {
                     prikaziProizvodjace();
@@ -312,7 +403,7 @@ function prikaziSveNaocareZaSunce() {
             sveNaocareSunceHtml += naocareHtml;
         }
         //postavi html u tbody tabele
-        $('#proizvodi tbody').html(sveNaocareSunceHtml);
+        $('#proizvodiSunce tbody').html(sveNaocareSunceHtml);
     });
 }
 
@@ -343,6 +434,7 @@ function prikaziSveNaocareZaVid() {
         $('#proizvodi tbody').html(sveNaocareVidHtml);
     });
 }
+
 
 
 // VRACA SVE PROIZVODJACE//////////////////////////////////////////////////////////////////////////////////////////////////////

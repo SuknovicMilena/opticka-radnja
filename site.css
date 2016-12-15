@@ -1,7 +1,7 @@
 body {
 	font-family: Verdana;
-	background-image: url(pozadina.jpg);
 	background-size: cover;
+	background-image: url(ljubicasta.jpg);
 }
 
 table {
@@ -13,14 +13,16 @@ table {
 	border: 1px solid black;
 }
 
-div.forma-holder, div.proizvodi-holder, div.proizvodjaci-holder {
+div.forma-holder, div.proizvodi-holder, div.proizvodjaci-holder,div.forma-holderSunce,div.proizvodi-holderSunce,div.forma-holder-proizvodjaci {
 	display: none;
 }
 
 .save-edit, .cancel-edit, 
 .save-edit-sunce, .cancel-edit-sunce,
 .save-edit-proizvodjac, .cancel-edit-proizvodjac,
-#dodaj-naocare, #otkazi-naocare {
+#dodaj-naocare, #otkazi-naocare,
+#dodaj-naocareSunce, #otkazi-naocareSunce,#dodaj-proizvodjaca,#otkazi-proizvodjaca
+ {
 	display: none;
 }
 
@@ -28,7 +30,7 @@ div.slajder {
     height: 455px;
 	width: 100%;
     position:relative;
-    /*background: url("fendi.jpg") no-repeat;*/
     background-size: cover;
     background-position: center;
 }
+

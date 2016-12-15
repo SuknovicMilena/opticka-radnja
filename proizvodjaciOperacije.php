@@ -39,13 +39,13 @@
 
     function dodajProizvodjaca($proizvodjacZaCuvanje) {
         global $mysqli;
-        $sql = 'INSERT INTO proizvodjac (ime,proizvodjac_id) 
-        VALUES ("'. $proizvodjacZaCuvanje->ime . '","' . $proizvodjacZaCuvanje->proizvodjac_id . '")';
+        $sql = 'INSERT INTO proizvodjac (ime) 
+        VALUES ("'. $proizvodjacZaCuvanje->ime .'")';
 
         if ($q = $mysqli->query($sql)) {
-            $proizvodjacZaCuvanje->id = $mysqli->insert_id;        // my sqli ubacuje id jer smo stavili da je AI PRI KREIRANJU BAZE
+            $proizvodjacZaCuvanje->proizvodjac_id = $mysqli->insert_id;        // my sqli ubacuje id jer smo stavili da je AI PRI KREIRANJU BAZE
             header('Content-Type: application/json');
-            echo json_encode($naocareZaCuvanje); 
+            echo json_encode($proizvodjacZaCuvanje); 
         } else {
             echo "GRESKA SA BAZOM";
             echo $mysqli->error;
@@ -57,12 +57,11 @@
         
         $sql = "UPDATE proizvodjac 
                 SET 
-                      ime='$proizvodjacZaIzmenu->ime',
+                      ime='$proizvodjacZaIzmenu->ime'
+                      WHERE proizvodjac_id= $proizvodjacZaIzmenu->proizvodjac_id";
+
                     
-                WHERE proizvodjac_id=$proizvodjacZaIzmenu->proizvodjac_id";
-
-
-        if ($q = $mysqli->query($sql)) {
+             if ($q = $mysqli->query($sql)) {
             header('Content-Type: application/json');
             echo json_encode($proizvodjacZaIzmenu); 
         } else {
