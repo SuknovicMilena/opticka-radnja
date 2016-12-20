@@ -23,8 +23,8 @@
 ?>
 
 <html>
-      <head>
-      <link rel="stylesheet" href="loginIndex.css">
+<head>
+  <link rel="stylesheet" href="loginIndex.css">
   <title>Uloguj se</title>
       
   </head>

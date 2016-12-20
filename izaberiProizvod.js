@@ -104,6 +104,7 @@ $(window).load(function () {
         $("#dodaj-proizvodjaca").show();
     });
 
+
     $(document).on('click', "#sacuvaj", function () {
 
         var naocare;

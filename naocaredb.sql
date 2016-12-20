@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2016 at 03:39 PM
+-- Generation Time: Dec 20, 2016 at 04:14 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -23,6 +23,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `korisnici`
+--
+
+CREATE TABLE `korisnici` (
+  `id_korisnika` int(11) NOT NULL,
+  `ime` varchar(11) NOT NULL,
+  `prezime` varchar(11) NOT NULL,
+  `lozinka` varchar(11) NOT NULL,
+  `email` varchar(25) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `korisnici`
+--
+
+INSERT INTO `korisnici` (`id_korisnika`, `ime`, `prezime`, `lozinka`, `email`) VALUES
+(1, 'milena', 'suknovic', 'milena', 'milena.suknovic@gmail.com'),
+(2, 'milica', 'suknovic', 'milica', 'micasu99@gmail.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `naocare_za_sunce`
 --
 
@@ -37,9 +59,10 @@ CREATE TABLE `naocare_za_sunce` (
 --
 
 INSERT INTO `naocare_za_sunce` (`id`, `ime`, `proizvodjac_id`) VALUES
-(2225, 'JovanovicRuczbmkkmmkmkmk', 1),
-(2226, 'milenasuuknovic', 3),
-(2227, 'silmpfr', 3);
+(2309, 'SCENIQUE SUNGLASSES', 1),
+(2311, 'AVANGLION 201 C14M', 2),
+(2312, 'Flower', 38),
+(2313, 'Sun', 40);
 
 -- --------------------------------------------------------
 
@@ -58,9 +81,8 @@ CREATE TABLE `naocare_za_vid` (
 --
 
 INSERT INTO `naocare_za_vid` (`id`, `ime`, `proizvodjac_id`) VALUES
-(3, 'Prada', 3),
-(5, 'Prada', 2),
-(6, 'Armani', 1);
+(6, 'Avang', 2),
+(18, 'RayBanPilot', 1);
 
 -- --------------------------------------------------------
 
@@ -78,9 +100,13 @@ CREATE TABLE `proizvodjac` (
 --
 
 INSERT INTO `proizvodjac` (`proizvodjac_id`, `ime`) VALUES
-(1, 'Ray Ban'),
-(2, 'Dior'),
-(3, 'Vogue');
+(1, 'MiuMiu'),
+(2, 'Avanglion'),
+(3, 'RayBan'),
+(38, 'Armani'),
+(39, 'Dior'),
+(40, 'Michael Kors'),
+(41, 'Cavalli');
 
 --
 -- Indexes for dumped tables
@@ -115,17 +141,17 @@ ALTER TABLE `proizvodjac`
 -- AUTO_INCREMENT for table `naocare_za_sunce`
 --
 ALTER TABLE `naocare_za_sunce`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2228;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2314;
 --
 -- AUTO_INCREMENT for table `naocare_za_vid`
 --
 ALTER TABLE `naocare_za_vid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `proizvodjac`
 --
 ALTER TABLE `proizvodjac`
-  MODIFY `proizvodjac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `proizvodjac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- Constraints for dumped tables
 --
